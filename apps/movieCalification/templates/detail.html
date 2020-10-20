@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TATO</title>
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="row">
+            <div class="col-10">
+                <div class="text-white">
+                    <h2>Tato-Películas:</h2> <small>Tiempos Anteriores, También Oscuros</small>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="text-white">
+                    Ingresaste como: {{request.session.nombre}}
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="container">
+        <div class="">
+            <h2>{{pelicula.nombre}} ({{pelicula.anio}}, {{pelicula.autor}})</h2>
+        </div>
+
+
+        <div class="row">
+
+
+            <div class="col-6">
+                <img style="width: 100%;" class="text-center" src="{{pelicula.imagen.url}}" />
+            </div>
+            <div class="col-6">
+                {{pelicula.sinopsis}}
+            </div>
+
+
+
+        </div>
+        <br>
+        <div class="row">
+            <h3>Calificación de usuarios: <p class="text-success">{{promedio.valor__avg}}</p> ({{calificaciones | length}} calificaciones)</h3>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <a href="/movies" class="btn btn-info">Regresar</a>
+            </div>
+
+            {% if calificada %}
+                <h2 class="text-success">Ya has calificado esta película</h2>
+            {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h3>Califica esta película:</h3>
+                        </div>
+                        <div class="col">
+                            <select name="valor" class="form-control">
+                                <option value="1">1 (Mala)</option>
+                                <option value="2">2 (Regular)</option>
+                                <option value="3">3 (Buena)</option>
+                                <option value="4">4 (Muy buena)</option>
+                                <option value="5">5 (Excelente)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-success">Califica</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+
+</html>
